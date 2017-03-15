@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <title>leaflet-tilelayer-colorpicker</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-hash/leaflet-hash.js"></script>
+  <script src="leaflet-tilelayer-colorpicker.js"></script>
+</head>
+
+<body>
+  <div id="map" style="position:absolute;top:0;left:0;right:0;bottom:0;"></div>
+  <script>
+    var map = L.map("map", L.extend({
+      minZoom: 0,
+      maxZoom: 18,
+      zoom: 8,
+      center: [35.658342, 139.701462]
+    }, L.Hash.parseHash(location.hash)));
+    L.hash(map);
+    map.zoomControl.setPosition("bottomright");
+
+    var colorpicker = L.tileLayer.colorPicker("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png?nocache", {
+      attribution: "<a href='http://maps.gsi.go.jp/development/ichiran.html'>GSI</a>"
+    }).addTo(map);
+
+    map.on("mousemove", function(event) {
+      var a = colorpicker.getColor(event.latlng);
+      if (a !== null) {
+        var hex = "#" + (0x1000000 + (a[0] << 16) + (a[1] << 8) + a[2]).toString(16).substr(1);
+        var tmpl = "<b style='background:@;color:black;'>@</b>";
+        if (Math.min(a[0], a[1], a[2]) < 0x40) tmpl = tmpl.replace("black", "white");
+        map.attributionControl.setPrefix(tmpl.replace(/@/g, hex));
+      } else {
+        map.attributionControl.setPrefix("unavailable");
+      }
+    });
+  </script>
+</body>
+
+</html>
