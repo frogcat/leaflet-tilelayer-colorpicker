@@ -14,8 +14,7 @@ var green = color[1];
 var blue = color[2];
 ```
 
-## Setting
-
+### Preconditions
 + CORS enabled Tiles are required.
 + `crossOrigin` option is set to **anonymous** by default, DO NOT set to false manually.
 
