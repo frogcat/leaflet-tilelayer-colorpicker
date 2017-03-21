@@ -14,6 +14,9 @@
 <body>
   <div id="map" style="position:absolute;top:0;left:0;right:0;bottom:0;"></div>
   <script>
+    var MAPBOX_PUBLIC_ACCESS_TOKEN = "pk.eyJ1IjoiZnJvZ2NhdCIsImEiOiJlYmE4ZTE4ZGEzMDAxNWQ5MWIyYmQ0MmFhN2Q5MDUyMCJ9.2jx0Hl7cJmXX4I7pZ-FtYA";
+    var MAPBOX_TERRAIN_RGB = "https://api.mapbox.com/v4/mapbox.terrain-rgb/{z}/{x}/{y}.pngraw?access_token=" + MAPBOX_PUBLIC_ACCESS_TOKEN;
+
     var map = L.map("map", L.extend({
       minZoom: 0,
       maxZoom: 18,
@@ -23,25 +26,22 @@
     L.hash(map);
     map.zoomControl.setPosition("bottomright");
 
-    var colorpicker = L.tileLayer.colorPicker("https://cyberjapandata.gsi.go.jp/xyz/dem_png/{z}/{x}/{y}.png?nocache", {
-      attribution: "<a href='http://maps.gsi.go.jp/development/ichiran.html'>GSI</a>",
+    var colorpicker = L.tileLayer.colorPicker(MAPBOX_TERRAIN_RGB, {
+      attribution: "© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a>" +
+        " © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>" +
+        " <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
       minZoom: 0,
       maxZoom: 18,
-      maxNativeZoom: 14
-    }).addTo(map);
-
-    L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png?nocache", {
-      attribution: "<a href='http://maps.gsi.go.jp/development/ichiran.html'>GSI</a>"
+      maxNativeZoom: 14,
+      opacity: 0.8
     }).addTo(map);
 
     map.on("mousemove", function(event) {
       var a = colorpicker.getColor(event.latlng);
       var h = NaN;
-      if (a !== null) {
-        var h = (a[0] << 16) + (a[1] << 8) + a[2];
-        h = h === 0x800000 ? NaN : (h > 0x800000 ? h - 0x1000000 : h) / 100;
-      }
-      map.attributionControl.setPrefix(isNaN(h) ? "N/A" : h.toFixed(2) + "m");
+      if (a !== null)
+        h = -10000 + ((a[0] * 256 * 256 + a[1] * 256 + a[2]) * 0.1);
+      map.attributionControl.setPrefix(isNaN(h) ? "N/A" : h.toFixed(1) + "m");
     });
   </script>
 </body>

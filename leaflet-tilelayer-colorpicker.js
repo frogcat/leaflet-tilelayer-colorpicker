@@ -1,7 +1,7 @@
 (function() {
   L.TileLayer.ColorPicker = L.TileLayer.extend({
     options: {
-      crossOrigin: "Anonymous"
+      crossOrigin: "anonymous"
     },
     getColor: function(latlng) {
       var size = this.getTileSize();
