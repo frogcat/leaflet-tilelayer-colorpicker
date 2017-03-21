@@ -1,0 +1,22 @@
+{
+  "name": "leaflet-tilelayer-colorpicker",
+  "version": "0.1.0",
+  "description": "A Leaflet TileLayer with getClor(latLng)",
+  "main": "leaflet-tilelayer-colorpicker.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frogcat/leaflet-tilelayer-colorpicker.git"
+  },
+  "keywords": [
+    "leaflet"
+  ],
+  "author": "frogcat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frogcat/leaflet-tilelayer-colorpicker/issues"
+  },
+  "homepage": "https://github.com/frogcat/leaflet-tilelayer-colorpicker#readme",
+  "peerDependencies": {
+    "leaflet": "^1.0.0"
+  }
+}
