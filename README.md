@@ -1,7 +1,9 @@
 # leaflet-tilelayer-colorpicker
+
 A Leaflet TileLayer with getColor(latLng)
 
 ## API
+
 ```
 // factory
 var layer = L.tilelayer.colorPicker(cors_enabled_url_template,options);
@@ -15,22 +17,28 @@ var blue = color[2];
 ```
 
 ### Preconditions
-+ CORS enabled Tiles are required.
-+ `crossOrigin` option is set to **anonymous** by default, DO NOT set to false manually.
+
+- CORS enabled Tiles are required.
+- `crossOrigin` option is set to **anonymous** by default, DO NOT set to false manually.
 
 ## Demo : display color under cursor
 
-+ <https://frogcat.github.io/leaflet-tilelayer-colorpicker/>
+- <https://frogcat.github.io/leaflet-tilelayer-colorpicker/>
 
 ## Demo : display elevation under cursor using Mapbox Terrain-RGB
 
-+ <https://frogcat.github.io/leaflet-tilelayer-colorpicker/mapbox-terrain-rgb.html>
+- <https://frogcat.github.io/leaflet-tilelayer-colorpicker/mapbox-terrain-rgb.html>
 
 See also : <https://www.mapbox.com/blog/terrain-rgb/>
 
-
 ## Demo : display elevation under cursor using GSI's DEM PNG Tile
 
-+ <https://frogcat.github.io/leaflet-tilelayer-colorpicker/elevation.html>
+- <https://frogcat.github.io/leaflet-tilelayer-colorpicker/elevation.html>
 
 See also : <http://maps.gsi.go.jp/development/demtile.html>
+
+## Sample : display color under cursor, map tiles are obtained via CORS enabled WMS
+
+- <https://frogcat.github.io/leaflet-tilelayer-colorpicker/wms.html>
+
+See also : <https://pacific-data.sprep.org/dataset/landsat-8-satellite-imagery-collection-1-papua-new-guinea>

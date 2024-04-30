@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <title>leaflet-tilelayer-wms-colorpicker</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      (function () {
+        L.TileLayer.WMS.ColorPicker = L.TileLayer.WMS.extend({
+          options: {
+            crossOrigin: "anonymous",
+          },
+          getColor: function (latlng) {
+            var size = this.getTileSize();
+            var point = this._map.project(latlng, this._tileZoom).floor();
+            var coords = point.unscaleBy(size).floor();
+            var offset = point.subtract(coords.scaleBy(size));
+            coords.z = this._tileZoom;
+            var tile = this._tiles[this._tileCoordsToKey(coords)];
+            if (!tile || !tile.loaded) return null;
+            try {
+              var canvas = document.createElement("canvas");
+              canvas.width = 1;
+              canvas.height = 1;
+              var context = canvas.getContext("2d");
+              context.drawImage(tile.el, -offset.x, -offset.y, size.x, size.y);
+              return context.getImageData(0, 0, 1, 1).data;
+            } catch (e) {
+              return null;
+            }
+          },
+        });
+        L.tileLayer.wms.colorPicker = function (url, options) {
+          return new L.TileLayer.WMS.ColorPicker(url, options);
+        };
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="map" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0"></div>
+    <script>
+      var map = L.map("map", {
+        minZoom: 0,
+        maxZoom: 18,
+        zoom: 7,
+        center: [-4.418, 149.815],
+      });
+
+      var colorpicker = L.tileLayer.wms
+        .colorPicker("https://geoserver-apia.sprep.org/geoserver/png/wms?", {
+          layers: "png:PNG_2018-2020_Imagery_Landsat8",
+          attribution:
+            "<a href='https://pacific-data.sprep.org/dataset/landsat-8-satellite-imagery-collection-1-papua-new-guinea'>SPREP</a>",
+        })
+        .addTo(map);
+      map.on("mousemove", function (event) {
+        var a = colorpicker.getColor(event.latlng);
+        if (a !== null) {
+          var hex = "#" + (0x1000000 + (a[0] << 16) + (a[1] << 8) + a[2]).toString(16).substr(1);
+          var tmpl = "<b style='background:@;color:black;'>@</b>";
+          if (Math.min(a[0], a[1], a[2]) < 0x40) tmpl = tmpl.replace("black", "white");
+          map.attributionControl.setPrefix(tmpl.replace(/@/g, hex));
+        } else {
+          map.attributionControl.setPrefix("unavailable");
+        }
+      });
+    </script>
+  </body>
+</html>
