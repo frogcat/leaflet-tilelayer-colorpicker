@@ -6,9 +6,9 @@ A Leaflet TileLayer with getColor(latLng)
 
 ## API
 
-```
+```javascript
 // factory
-var layer = L.tilelayer.colorPicker(cors_enabled_url_template,options);
+var layer = L.tilelayer.colorPicker(cors_enabled_url_template, options);
 layer.addTo(map);
 
 // getColor(latLng) returns Uint8Array ([r,g,b,a]) or null
@@ -23,23 +23,19 @@ var blue = color[2];
 - CORS enabled Tiles are required.
 - `crossOrigin` option is set to **anonymous** by default, DO NOT set to false manually.
 
-## Demo : display color under cursor
+## Demo
+
+### display color under cursor
 
 - <https://frogcat.github.io/leaflet-tilelayer-colorpicker/>
 
-## Demo : display elevation under cursor using Mapbox Terrain-RGB
-
-- <https://frogcat.github.io/leaflet-tilelayer-colorpicker/mapbox-terrain-rgb.html>
-
-See also : <https://www.mapbox.com/blog/terrain-rgb/>
-
-## Demo : display elevation under cursor using GSI's DEM PNG Tile
+### display elevation under cursor using GSI's DEM PNG Tile
 
 - <https://frogcat.github.io/leaflet-tilelayer-colorpicker/elevation.html>
 
 See also : <http://maps.gsi.go.jp/development/demtile.html>
 
-## Sample : display color under cursor, map tiles are obtained via CORS enabled WMS
+### display color under cursor, map tiles are obtained via CORS enabled WMS
 
 - <https://frogcat.github.io/leaflet-tilelayer-colorpicker/wms.html>
 
@@ -66,7 +62,7 @@ an ES Module for Leaflet 2.0.
       {
         "imports": {
           "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
-          "colorpicker": "./TileLayerWithColorPicker.js"
+          "colorpicker": "https://frogcat.github.io/leaflet-tilelayer-colorpicker/TileLayerWithColorPicker.js"
         }
       }
     </script>
@@ -103,8 +99,8 @@ an ES Module for Leaflet 2.0.
 </html>
 ```
 
-## Demo : display color under cursor for Leaflet 2.0
+## Demo
+
+### display color under cursor for Leaflet 2.0
 
 - <https://frogcat.github.io/leaflet-tilelayer-colorpicker/TileLayerWithColorPicker.html>
-
-<>
